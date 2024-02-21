@@ -1,0 +1,25 @@
+.greetWrapper {
+    margin: auto;
+    max-width: 90vw;
+}
+.greetCard {
+    margin-top: 30px;
+    -webkit-transition: background-color .2s cubic-bezier(0, 0, .2, 1);
+    transition: background-color .2s cubic-bezier(0, 0, .2, 1);
+    background-color: #fff;
+    border: 1px solid rgb(218, 220, 224);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    padding: 24px;
+    font-size: 14pt;
+    page-break-inside: avoid;
+    word-wrap: break-word;
+}
+.greetHeading{
+    font-size: 16pt;
+    text-align: center;
+}
+.greetSlogun{
+    text-align: center;
+    font-size: 15pt;
+}

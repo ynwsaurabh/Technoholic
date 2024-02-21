@@ -1,14 +1,12 @@
 import React from 'react'
 import { redirect } from 'next/navigation'
 const page = () => {
-  const auth =false;
+    const auth =false;
   if(!auth){
-    redirect('/verify/login')
+    redirect('/registration/form')
   }
   return (
-    <div>
-      page
-    </div>
+    <div>page</div>
   )
 }
 

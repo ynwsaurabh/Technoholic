@@ -1,0 +1,23 @@
+.searchWrapper {
+    margin: auto;
+    max-width: 90vw;
+    background-color: white;
+}
+
+.Wrapper {
+    min-height: 70vw;
+
+}
+h1{
+    margin-top: 20px;
+    text-align: center;
+}
+.tableWrapper {
+    margin-top: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.search {
+    min-height: 10px;
+}
