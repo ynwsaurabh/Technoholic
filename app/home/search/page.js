@@ -19,7 +19,9 @@ import { getDatabase, ref, query, equalTo, orderByChild, startAt, endAt, get } f
 import FirebaseConfig from '@/Component/Config';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
-
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation'
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -42,6 +44,17 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const page = () => {
     const app = FirebaseConfig();
+    const auth = getAuth(app);
+    let isToastShown = false;
+    const router = useRouter();
+
+    onAuthStateChanged(auth, (user) => {
+        if (!user && !isToastShown) {
+            toast.error('Login First');
+            router.replace('/verify/login');
+            isToastShown = true;
+        }
+    });
     const [event, setEvent] = useState('Battle Brain');
     const [students, setStudents] = useState([]);
     const events = [
