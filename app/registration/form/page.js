@@ -17,6 +17,7 @@ const form = () => {
     const app = FirebaseConfig();
     const db = getDatabase(app);
     const router = useRouter();
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [checkboxes, setCheckboxes] = useState([
         { label: 'Battle Brain', value: 'Battle Brain', isChecked: false },
         { label: 'Code Craft', value: 'Code Craft', isChecked: false },
@@ -136,6 +137,7 @@ const form = () => {
         } else if (clgID == null) {
             toast.error('Select your  College ID /Fee Receipt!')
         } else {
+            setIsButtonDisabled(true);
             console.log(formData)
             setLoading(true);
             const { Name, Email, College_Name, Class, Contact_Number, Events } = formData;
@@ -261,6 +263,7 @@ const form = () => {
                                     placeholder='Your email'
                                     value={formData.Email}
                                     onChange={handleChange}
+                                    disabled={isButtonDisabled}
                                     required />
                                 <div className='line'></div>
                             </div>
@@ -313,6 +316,7 @@ const form = () => {
                                     type='text'
                                     placeholder='Your answer'
                                     value={formData.Name}
+                                    disabled={isButtonDisabled}
                                     onChange={handleChange}
                                     required />
                                 <div className='line'></div>
@@ -328,6 +332,7 @@ const form = () => {
                                     name='College_Name'
                                     placeholder='Your answer'
                                     value={formData.College_Name}
+                                    disabled={isButtonDisabled}
                                     onChange={handleChange}
                                     required />
                                 <div className='line'></div>
@@ -344,6 +349,7 @@ const form = () => {
                                     placeholder='Your answer'
                                     value={formData.Class}
                                     onChange={handleChange}
+                                    disabled={isButtonDisabled}
                                     required />
                                 <div className='line'></div>
                             </div>
@@ -359,6 +365,7 @@ const form = () => {
                                     placeholder='Your answer'
                                     value={formData.Contact_Number}
                                     onChange={handleChange}
+                                    disabled={isButtonDisabled}
                                     required />
                                 <div className='line'></div>
                             </div>
@@ -377,6 +384,7 @@ const form = () => {
                                                 value={checkbox.value}
                                                 checked={formData.Events.includes(checkbox.value)}
                                                 onChange={handleChange}
+                                                disabled={isButtonDisabled}
                                             />
                                             <span className="checkbox__symbol">
                                                 <svg
@@ -403,7 +411,7 @@ const form = () => {
 
                             {currentImg == null ? (
                                 <div className='field'>
-                                    <input id="inputImage" accept="image/*" type="file" name="image" style={{ display: 'none' }} />
+                                    <input id="inputImage" accept="image/*" type="file" disabled={isButtonDisabled} name="image" style={{ display: 'none' }} />
                                     <div className="button" onClick={handleImage}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 18 18"><g transform="translate(-3, -3)"><path d="M6,14.25 L7.5,14.25 L7.5,16.5 L16.5,16.5 L16.5,14.25 L18,14.25 L18,16.5 C18,17.325 17.325,18 16.5,18 L7.5,18 C6.675,18 6,17.325 6,16.5 L6,14.25 Z M9.3075,10.8075 L11.25,8.8725 L11.25,15 L12.75,15 L12.75,8.8725 L14.6925,10.815 L15.75,9.75 L12,6 L8.25,9.75 L9.3075,10.8075 Z" fill="#1a73e8"></path><path fill="#1a73e8"></path></g></svg>
                                         &nbsp; Add file
@@ -433,7 +441,7 @@ const form = () => {
 
                             {clgID == null ? (
                                 <div className='field'>
-                                    <input id="inputID" accept="image/*" type="file" name="image" hidden />
+                                    <input id="inputID" accept="image/*" type="file" name="image" disabled={isButtonDisabled} hidden />
                                     <div className="button" onClick={handleID}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 18 18"><g transform="translate(-3, -3)"><path d="M6,14.25 L7.5,14.25 L7.5,16.5 L16.5,16.5 L16.5,14.25 L18,14.25 L18,16.5 C18,17.325 17.325,18 16.5,18 L7.5,18 C6.675,18 6,17.325 6,16.5 L6,14.25 Z M9.3075,10.8075 L11.25,8.8725 L11.25,15 L12.75,15 L12.75,8.8725 L14.6925,10.815 L15.75,9.75 L12,6 L8.25,9.75 L9.3075,10.8075 Z" fill="#1a73e8"></path><path fill="#1a73e8"></path></g></svg>
                                         &nbsp; Add file
@@ -447,9 +455,9 @@ const form = () => {
 
                         </div>
                         <div className='buttonWrapper'>
-                            <button className='buttonSubmit' type='submit'>Submit</button>
+                            <button className='buttonSubmit' type='submit' disabled={isButtonDisabled}>Submit</button>
                             {/* <FormDialog open={dialogOpen} onClose={() => setDialogOpen(false)} onEdit={handleEdit} /> */}
-                            <Button variant="outlined" onClick={handleClear}>
+                            <Button variant="outlined" disabled={isButtonDisabled} onClick={handleClear}>
                                 Clear form
                             </Button>
                         </div>
