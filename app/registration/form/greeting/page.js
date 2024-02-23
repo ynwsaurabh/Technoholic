@@ -11,6 +11,12 @@ const page = () => {
             </div >
             <div className='greetWrapper'>
                 <div className='greetCard'>
+                    <div className="logoWrapper">
+                        <div className='logo'>
+                            <img src='/Images/kbplogo2.jpg'/>
+                            <span className='clgName'>Kbp college</span>
+                        </div >
+                    </div>
                     <div className='greetHeading' aria-level="2">
                         <b>TECHNOHOLIC</b>
                     </div>

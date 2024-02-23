@@ -11,9 +11,23 @@
     border-radius: 8px;
     margin-bottom: 12px;
     padding: 24px;
+    text-align: justify;
     font-size: 14pt;
     page-break-inside: avoid;
     word-wrap: break-word;
+}
+.clgName{
+    position: absolute;
+    display: inline;
+    font-size: 24px;
+    font-weight: 500;
+    color: #000000;
+    margin: 5px 12px;
+}
+img{
+    width: 2em;
+    border-radius: 50%;
+    height: 2em;
 }
 .greetHeading{
     font-size: 16pt;
