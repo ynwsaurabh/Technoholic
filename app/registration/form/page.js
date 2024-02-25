@@ -11,6 +11,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { toast } from 'react-toastify';
 import Uploading from '@/Component/Uploading';
 import Button from '@mui/material/Button';
+import Link from 'next/link'
 
 const form = () => {
     const [loading, setLoading] = useState(false)
@@ -126,9 +127,27 @@ const form = () => {
     //     router.push(`/registration/form/${code}`);
     // }
 
+    const [alreadyEmail, setAlreadyEmail] = useState(false);
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!Array.isArray(formData.Events) || formData.Events.length === 0) {
+        const { Name, Email, College_Name, Class, Contact_Number, Events } = formData;
+        const studentsRef = ref(db, `Students`)
+        const snapshot = await get(studentsRef);
+        let foundEmail = false;
+
+        if (snapshot.exists()) {
+            snapshot.forEach((childSnapshot) => {
+                const studentData = childSnapshot.val();
+                if (studentData.Email === Email) {
+                    foundEmail = true;
+                }
+            });
+        }
+
+        if (foundEmail) {
+            toast.error('This email is already registered');
+        }
+        else if (!Array.isArray(formData.Events) || formData.Events.length === 0) {
             toast.error('select atleast one event!');
         } else if (currentImg == null) {
             toast.error('Select Current Image!')
@@ -140,10 +159,10 @@ const form = () => {
             setIsButtonDisabled(true);
             console.log(formData)
             setLoading(true);
-            const { Name, Email, College_Name, Class, Contact_Number, Events } = formData;
+
             function generateRandomKey() {
                 const prefix = "TECHNO24";
-                const randomDigits = Math.floor(Math.random() * (999 - 10 + 1) + 10);
+                const randomDigits = Math.floor(Math.random() * (9999 - 10 + 1) + 10);
                 return prefix + randomDigits;
             }
             const randomKey = generateRandomKey();
@@ -183,6 +202,8 @@ const form = () => {
                 idImage: IDdownloadURL,
             }
 
+            set(studentsRef, newData)
+
             const dataSend = {
                 email: Email,
                 name: Name,
@@ -197,15 +218,11 @@ const form = () => {
             })
                 .then((res) => {
                     console.log(res);
-                    if (res.status > 199 && res.status < 300) {
-                    }
+                    toast.success("Form Submitted successfully")
+                    setLoading(false);
+                    router.replace(`/registration/form/greeting`);
                 });
 
-            set(studentsRef, newData).then(() => {
-                toast.success("Form Submitted successfully")
-                setLoading(false);
-                router.replace(`/registration/form/greeting`);
-            })
         }
     };
 
@@ -234,8 +251,10 @@ const form = () => {
         <div className='bannerWrapper cardWrapper'>
             <div className="buttonWrapper">
                 <div className='logo'>
-                    <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" width="3em" height="2.5em" xmlns="http://www.w3.org/2000/svg"><path fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16.5,19 C17.8807119,19 19,17.8807119 19,16.5 C19,15.1192881 17.8807119,14 16.5,14 C15.1192881,14 14,15.1192881 14,16.5 C14,17.8807119 15.1192881,19 16.5,19 Z M10,5 L12,3 M7.5,10 C8.88071187,10 10,8.88071187 10,7.5 C10,6.11928813 8.88071187,5 7.5,5 C6.11928813,5 5,6.11928813 5,7.5 C5,8.88071187 6.11928813,10 7.5,10 Z M8,16 L16,8 M5.5,21 C6.88071187,21 8,19.8807119 8,18.5 C8,17.1192881 6.88071187,16 5.5,16 C4.11928813,16 3,17.1192881 3,18.5 C3,19.8807119 4.11928813,21 5.5,21 Z M18.5,8 C19.8807119,8 21,6.88071187 21,5.5 C21,4.11928813 19.8807119,3 18.5,3 C17.1192881,3 16,4.11928813 16,5.5 C16,6.88071187 17.1192881,8 18.5,8 Z M12,21 L14,19"></path ></svg >
-                    <span className='title'>Technoholic</span>
+                    <Link href="/verify/login">
+                        <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" width="3em" height="2.5em" xmlns="http://www.w3.org/2000/svg"><path fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16.5,19 C17.8807119,19 19,17.8807119 19,16.5 C19,15.1192881 17.8807119,14 16.5,14 C15.1192881,14 14,15.1192881 14,16.5 C14,17.8807119 15.1192881,19 16.5,19 Z M10,5 L12,3 M7.5,10 C8.88071187,10 10,8.88071187 10,7.5 C10,6.11928813 8.88071187,5 7.5,5 C6.11928813,5 5,6.11928813 5,7.5 C5,8.88071187 6.11928813,10 7.5,10 Z M8,16 L16,8 M5.5,21 C6.88071187,21 8,19.8807119 8,18.5 C8,17.1192881 6.88071187,16 5.5,16 C4.11928813,16 3,17.1192881 3,18.5 C3,19.8807119 4.11928813,21 5.5,21 Z M18.5,8 C19.8807119,8 21,6.88071187 21,5.5 C21,4.11928813 19.8807119,3 18.5,3 C17.1192881,3 16,4.11928813 16,5.5 C16,6.88071187 17.1192881,8 18.5,8 Z M12,21 L14,19"></path ></svg >
+                        <span className='title'>Technoholic</span>
+                    </Link>
                 </div >
                 {/* <button className="button" onClick={handleLogin}>Sign In</button> */}
             </div >
