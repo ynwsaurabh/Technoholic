@@ -57,7 +57,7 @@ const page = ({ params }) => {
                 } else {
                     if (isMounted) {
                         toast.error('Invalid Id');
-                        router.replace('/registration/form');
+                        router.replace('/registration/form/EditResponse');
                     }
                 }
             })
